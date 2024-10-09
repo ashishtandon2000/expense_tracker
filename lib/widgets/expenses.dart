@@ -10,7 +10,6 @@ class Expenses extends StatefulWidget {
 }
 
 class _ExpensesState extends State<Expenses> {
-
   final List<Expense> dummyExpenses = [
     Expense(
       title: "First Expense",
@@ -25,21 +24,56 @@ class _ExpensesState extends State<Expenses> {
         dateTime: DateTime.now()),
   ];
 
-  _showNewExpenseDialog(){
-    showModalBottomSheet(context: context, builder: (ctx)=> AddExpense(addExpense: _addNewExpense,));
+  _showNewExpenseDialog() {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (ctx) => AddExpense(
+              addExpense: _addExpense,
+            ));
   }
 
-  _addNewExpense(Expense expense){
+  _addExpense(Expense expense) {
     setState(() {
       dummyExpenses.add(expense);
     });
   }
 
+  _removeExpense(Expense expense){
+    int index =  dummyExpenses.indexOf(expense);
+    if(index>=0){
+      setState(() {
+        dummyExpenses.removeAt(index);
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Removed expense - ${expense.title}"),
+         duration: const Duration(seconds: 3),
+         action: SnackBarAction(label: "UNDO", onPressed: (){
+          setState(() {
+            dummyExpenses.insert(index, expense);
+          });
+        }),),
+      );
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    print("#DEBUG _ RUNNING - ${dummyExpenses.length}");
+
+    Widget widgetContent = const Center(
+      child: Text("No expenses yet"),
+    );
+
+    if (dummyExpenses.isNotEmpty){
+      widgetContent = ExpensesList(itemsList: dummyExpenses,removeItem: _removeExpense,);
+    }
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Expense Tracker"),
+        title:  Text("Expense Tracker",style: App.text.text1,),
         actions: [
           IconButton(
             onPressed: _showNewExpenseDialog,
@@ -52,7 +86,7 @@ class _ExpensesState extends State<Expenses> {
         child: Column(
           children: [
             Expanded(
-              child: ExpensesList(itemsList: dummyExpenses),
+              child: widgetContent,
             ),
           ],
         ),

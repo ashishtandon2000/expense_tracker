@@ -85,6 +85,7 @@ class _ExpensesState extends State<Expenses> {
         width: double.maxFinite,
         child: Column(
           children: [
+            Chart(expenses: dummyExpenses,),
             Expanded(
               child: widgetContent,
             ),

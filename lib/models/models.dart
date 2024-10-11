@@ -7,3 +7,4 @@ import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 
 part 'expense.dart';
+part 'bucket.dart';

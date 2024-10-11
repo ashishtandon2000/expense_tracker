@@ -19,6 +19,9 @@ class ExpensesList extends StatelessWidget {
           // // Here we are able to make changes in the expense list of expenses.dart because in dart lists, maps, sets etc are passed by reference.
           // // Because of which child widget and parent widget both are referring to same expense list.
         },
+        background: Container(
+          color: Theme.of(context).colorScheme.errorContainer,
+        ),
         child: ExpensesItem(
           expense: itemsList[index],
         ),

@@ -9,17 +9,12 @@ const _primaryColorDark = Color(0xFF2A3B5F);
 class App {
   const App();
   static const color = _Colors();
-  static final text = _Text();
   static final colorScheme = ColorScheme.fromSeed(seedColor: _primaryColor);
   static final colorSchemeDark = ColorScheme.fromSeed(
       brightness:Brightness.dark,seedColor: _primaryColorDark);
 }
 
-class _Text {
-  _Text();
 
-  final TextStyle text1 = GoogleFonts.protestStrike();
-}
 
 class _Colors {
   const _Colors();
@@ -33,6 +28,7 @@ class _Colors {
 }
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   return runApp(
     MaterialApp(
       themeMode: ThemeMode.system,
@@ -49,6 +45,7 @@ void main() {
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
                 backgroundColor: App.colorSchemeDark.primaryContainer)),
+        textTheme: GoogleFonts.protestStrikeTextTheme(Typography.whiteRedmond),
       ),
       theme: ThemeData().copyWith(
         colorScheme: App.colorScheme,
@@ -63,6 +60,7 @@ void main() {
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
                 backgroundColor: App.colorScheme.primaryContainer)),
+        textTheme: GoogleFonts.protestStrikeTextTheme(),
       ),
       debugShowCheckedModeBanner: false,
       home: const Expenses(),

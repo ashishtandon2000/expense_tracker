@@ -26,6 +26,7 @@ class _ExpensesState extends State<Expenses> {
 
   _showNewExpenseDialog() {
     showModalBottomSheet(
+      useSafeArea: true,
         isScrollControlled: true,
         context: context,
         builder: (ctx) => AddExpense(
@@ -63,7 +64,7 @@ class _ExpensesState extends State<Expenses> {
   @override
   Widget build(BuildContext context) {
     print("#DEBUG _ RUNNING - ${dummyExpenses.length}");
-
+    final width = MediaQuery.of(context).size.width;
     Widget widgetContent = const Center(
       child: Text("No expenses yet"),
     );
@@ -73,7 +74,7 @@ class _ExpensesState extends State<Expenses> {
     }
     return Scaffold(
       appBar: AppBar(
-        title:  Text("Expense Tracker",style: App.text.text1,),
+        title:  const Text("Expense Tracker"),
         actions: [
           IconButton(
             onPressed: _showNewExpenseDialog,
@@ -83,9 +84,16 @@ class _ExpensesState extends State<Expenses> {
       ),
       body: SizedBox(
         width: double.maxFinite,
-        child: Column(
+        child: (width < 600)?Column(
           children: [
             Chart(expenses: dummyExpenses,),
+            Expanded(
+              child: widgetContent,
+            ),
+          ],
+        ):Row(
+          children: [
+            Expanded(child: Chart(expenses: dummyExpenses,)),
             Expanded(
               child: widgetContent,
             ),

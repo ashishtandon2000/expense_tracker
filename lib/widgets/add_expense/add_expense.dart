@@ -74,70 +74,77 @@ class _AddExpenseState extends State<AddExpense> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16,60,16,16),
-      child: Column(
-        children: [
-          TextField(
-            controller: titleController,
-            maxLength: 50,
-            decoration: const InputDecoration(
-              label: Text("Title"),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    /// This will provide the height of offset we are getting from bottom if any. For example when keyboard is opened it will provide the height of keyboard.
+    final keyboardHeight =MediaQuery.of(context).viewInsets.bottom; 
+    return SizedBox(
+      height: double.maxFinite,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding:  EdgeInsets.fromLTRB(16,60,16,16+keyboardHeight),
+          child: Column(
             children: [
-              SizedBox(
-                width: 100,
-                child: TextField(
-                  controller: amountController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    prefixText: " Rs. ",
-                    label: Text("Amount"),
-                  ),
+              TextField(
+                controller: titleController,
+                maxLength: 50,
+                decoration: const InputDecoration(
+                  label: Text("Title"),
                 ),
               ),
-              Text(
-                formatter.format(dateInput),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 100,
+                    child: TextField(
+                      controller: amountController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        prefixText: " Rs. ",
+                        label: Text("Amount"),
+                      ),
+                    ),
+                  ),
+                  Text(
+                    formatter.format(dateInput),
+                  ),
+                  IconButton(
+                    onPressed: _changeDate,
+                    icon: const Icon(Icons.calendar_month),
+                  ),
+                ],
               ),
-              IconButton(
-                onPressed: _changeDate,
-                icon: const Icon(Icons.calendar_month),
-              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    DropdownButton(
+                        value: categoryInput,
+                        items: Category.values
+                            .map(
+                              (category) => DropdownMenuItem(
+                                value: category,
+                                child: Text(category.name),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (value) {
+                          if (value != null) {
+                            setState(() {
+                              categoryInput = value;
+                            });
+                          }
+                        }),
+                    FormButtons(
+                      cancelAction: _cancelAction,
+                      saveAction: _saveAction,
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                DropdownButton(
-                    value: categoryInput,
-                    items: Category.values
-                        .map(
-                          (category) => DropdownMenuItem(
-                            value: category,
-                            child: Text(category.name),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (value) {
-                      if (value != null) {
-                        setState(() {
-                          categoryInput = value;
-                        });
-                      }
-                    }),
-                FormButtons(
-                  cancelAction: _cancelAction,
-                  saveAction: _saveAction,
-                ),
-              ],
-            ),
-          )
-        ],
+        ),
       ),
     );
   }

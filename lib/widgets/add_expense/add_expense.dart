@@ -15,7 +15,7 @@ class _AddExpenseState extends State<AddExpense> {
   final titleController = TextEditingController();
   final amountController = TextEditingController();
   DateTime dateInput = DateTime.now();
-  Category categoryInput = Category.essential;
+  ExpenseCategory categoryInput = ExpenseCategory.essential;
 
   void _cancelAction() => Navigator.pop(context);
 
@@ -120,7 +120,7 @@ class _AddExpenseState extends State<AddExpense> {
                   children: [
                     DropdownButton(
                         value: categoryInput,
-                        items: Category.values
+                        items: ExpenseCategory.values
                             .map(
                               (category) => DropdownMenuItem(
                                 value: category,

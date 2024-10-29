@@ -8,9 +8,9 @@ class Chart extends StatelessWidget{
 
   List<ExpenseBucket> get buckets {
     return [
-      ExpenseBucket.forCategory(expenses: expenses, category: Category.essential),
-      ExpenseBucket.forCategory(expenses: expenses, category: Category.nonEssential),
-      ExpenseBucket.forCategory(expenses: expenses, category: Category.investment)
+      ExpenseBucket.forCategory(expenses: expenses, category: ExpenseCategory.essential),
+      ExpenseBucket.forCategory(expenses: expenses, category: ExpenseCategory.nonEssential),
+      ExpenseBucket.forCategory(expenses: expenses, category: ExpenseCategory.investment)
     ];
   }
 
@@ -63,7 +63,7 @@ class Chart extends StatelessWidget{
           const SizedBox(height: 15,),
           Row(
             children: [
-              for(final category in Category.values)
+              for(final category in ExpenseCategory.values)
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),

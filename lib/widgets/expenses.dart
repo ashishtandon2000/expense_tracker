@@ -14,13 +14,13 @@ class _ExpensesState extends State<Expenses> {
     Expense(
       title: "First Expense",
       amount: 100,
-      category: Category.investment,
+      category: ExpenseCategory.investment,
       dateTime: DateTime.now(),
     ),
     Expense(
         title: "Second Expense",
         amount: 200,
-        category: Category.investment,
+        category: ExpenseCategory.investment,
         dateTime: DateTime.now()),
   ];
 

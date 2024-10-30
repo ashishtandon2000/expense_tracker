@@ -10,7 +10,6 @@ import 'package:intl/intl.dart';
 part 'expense.dart';
 part 'investment.dart';
 part 'liquid_fund.dart';
-part 'finance_summary.dart';
 part 'user_finance.dart';
 part 'income.dart';
 

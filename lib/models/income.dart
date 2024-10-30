@@ -3,8 +3,8 @@ part of 'models.dart';
 //
 class Income{
   const Income({
-    required this.amount,
-    required this.source,
+    this.amount = 0,
+    this.source = "",
     this.isFixed = true,
     this.isRecurring = true, // if the income is recurring then it should automatically be added to new months funds automatically
 });

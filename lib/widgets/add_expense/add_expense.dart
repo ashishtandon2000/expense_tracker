@@ -1,9 +1,7 @@
 part of "../widgets.dart";
 
 class AddExpense extends StatefulWidget {
-  const AddExpense({required this.addExpense, super.key});
-
-  final void Function(Expense) addExpense;
+  const AddExpense({super.key});
 
   @override
   State<AddExpense> createState() {
@@ -14,8 +12,12 @@ class AddExpense extends StatefulWidget {
 class _AddExpenseState extends State<AddExpense> {
   final titleController = TextEditingController();
   final amountController = TextEditingController();
+  late FinanceProvider financeProvider;
+
   DateTime dateInput = DateTime.now();
   ExpenseCategory categoryInput = ExpenseCategory.essential;
+  ExpenseSubCategory subCategoryInput = ExpenseSubCategory.other;
+
 
   void _cancelAction() => Navigator.pop(context);
 
@@ -25,11 +27,12 @@ class _AddExpenseState extends State<AddExpense> {
     if (!isValid) {
       return;
     }
-    widget.addExpense(Expense(
+    financeProvider.updateExpense(Expense(
         title: titleController.text,
         amount: int.parse(amountController.text),
         category: categoryInput,
-        dateTime: dateInput));
+        subCategory: subCategoryInput,
+        dateTime: dateInput,));
 
     Navigator.pop(context);
   }
@@ -70,6 +73,23 @@ class _AddExpenseState extends State<AddExpense> {
         dateInput = pickedTime;
       });
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    financeProvider = Provider.of<FinanceProvider>(context, listen: false);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+    titleController.dispose();
+    amountController.dispose();
   }
 
   @override
@@ -116,7 +136,6 @@ class _AddExpenseState extends State<AddExpense> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     DropdownButton(
                         value: categoryInput,
@@ -135,13 +154,31 @@ class _AddExpenseState extends State<AddExpense> {
                             });
                           }
                         }),
-                    FormButtons(
-                      cancelAction: _cancelAction,
-                      saveAction: _saveAction,
-                    ),
+                    const SizedBox(width: 30,),
+                    DropdownButton(
+                        value: subCategoryInput,
+                        items: ExpenseSubCategory.values
+                            .map(
+                              (subCategory) => DropdownMenuItem(
+                            value: subCategory,
+                            child: Text(subCategory.name),
+                          ),
+                        )
+                            .toList(),
+                        onChanged: (value) {
+                          if (value != null) {
+                            setState(() {
+                              subCategoryInput = value;
+                            });
+                          }
+                        }),
                   ],
                 ),
-              )
+              ),
+              FormButtons(
+                cancelAction: _cancelAction,
+                saveAction: _saveAction,
+              ),
             ],
           ),
         ),

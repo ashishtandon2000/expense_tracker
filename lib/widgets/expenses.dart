@@ -1,83 +1,35 @@
 part of "widgets.dart";
 
-class Expenses extends StatefulWidget {
+class Expenses extends StatelessWidget {
   const Expenses({super.key});
 
   @override
-  State<Expenses> createState() {
-    return _ExpensesState();
-  }
-}
-
-class _ExpensesState extends State<Expenses> {
-  final List<Expense> dummyExpenses = [
-    Expense(
-      title: "First Expense",
-      amount: 100,
-      category: ExpenseCategory.investment,
-      dateTime: DateTime.now(),
-    ),
-    Expense(
-        title: "Second Expense",
-        amount: 200,
-        category: ExpenseCategory.investment,
-        dateTime: DateTime.now()),
-  ];
-
-  _showNewExpenseDialog() {
-    showModalBottomSheet(
-      useSafeArea: true,
-        isScrollControlled: true,
-        context: context,
-        builder: (ctx) => AddExpense(
-              addExpense: _addExpense,
-            ));
-  }
-
-  _addExpense(Expense expense) {
-    setState(() {
-      dummyExpenses.add(expense);
-    });
-  }
-
-  _removeExpense(Expense expense){
-    int index =  dummyExpenses.indexOf(expense);
-    if(index>=0){
-      setState(() {
-        dummyExpenses.removeAt(index);
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Removed expense - ${expense.title}"),
-         duration: const Duration(seconds: 3),
-         action: SnackBarAction(label: "UNDO", onPressed: (){
-          setState(() {
-            dummyExpenses.insert(index, expense);
-          });
-        }),),
-      );
-    }
-  }
-
-
-  @override
   Widget build(BuildContext context) {
-    print("#DEBUG _ RUNNING - ${dummyExpenses.length}");
     final width = MediaQuery.of(context).size.width;
+    final financeProvider = Provider.of<FinanceProvider>(context); // Access provider
+    final expenseList = financeProvider.user.expenseBucket.expenses;
+
+    print("#DEBUG _ RUNNING - $expenseList");
+
     Widget widgetContent = const Center(
       child: Text("No expenses yet"),
     );
 
-    if (dummyExpenses.isNotEmpty){
-      widgetContent = ExpensesList(itemsList: dummyExpenses,removeItem: _removeExpense,);
+    if (expenseList.isNotEmpty){
+      widgetContent = const ExpensesList();
     }
     return Scaffold(
       appBar: AppBar(
         title:  const Text("Expense Tracker"),
         actions: [
           IconButton(
-            onPressed: _showNewExpenseDialog,
+            onPressed: (){
+              showModalBottomSheet(
+                  useSafeArea: true,
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (ctx) => const AddExpense());
+            },
             icon: const Icon(Icons.add),
           )
         ],
@@ -86,14 +38,14 @@ class _ExpensesState extends State<Expenses> {
         width: double.maxFinite,
         child: (width < 600)?Column(
           children: [
-            Chart(expenses: dummyExpenses,),
+            (expenseList.isNotEmpty)?Chart(expenses: expenseList,):const SizedBox(),
             Expanded(
               child: widgetContent,
             ),
           ],
         ):Row(
           children: [
-            Expanded(child: Chart(expenses: dummyExpenses,)),
+            (expenseList.isNotEmpty)?Expanded(child: Chart(expenses: expenseList,)):const SizedBox(),
             Expanded(
               child: widgetContent,
             ),

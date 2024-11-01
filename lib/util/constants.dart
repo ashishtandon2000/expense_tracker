@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+part of 'util.dart';
 
 const _primaryColor = Color(0xFFc7dbf9);
 const _primaryColorDark = Color(0xFF2A3B5F);
 
 class App {
   const App();
+
+  static const print = _appPrint;
   static const color = _Colors();
   static final colorScheme = ColorScheme.fromSeed(seedColor: _primaryColor);
   static final colorSchemeDark = ColorScheme.fromSeed(

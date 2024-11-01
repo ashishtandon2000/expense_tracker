@@ -10,7 +10,7 @@ class Chart extends StatelessWidget{
     return [
       ExpenseBucket.forCategory(expenses: expenses, category: ExpenseCategory.essential),
       ExpenseBucket.forCategory(expenses: expenses, category: ExpenseCategory.nonEssential),
-      ExpenseBucket.forCategory(expenses: expenses, category: ExpenseCategory.investment)
+      ExpenseBucket.forCategory(expenses: expenses, category: ExpenseCategory.miscellaneous)
     ];
   }
 

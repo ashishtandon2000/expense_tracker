@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-import 'constants.dart';
+import 'package:expense_tracker/provider/provider.dart';
+import 'util/util.dart';
 import 'database/database.dart';
 import 'widgets/widgets.dart';
 
@@ -11,12 +12,15 @@ void main() async {
   await appInIt();
 
   return runApp(
-    MaterialApp(
-      themeMode: ThemeMode.system,
-      darkTheme: darkTheme,
-      theme: lightTheme,
-      debugShowCheckedModeBanner: false,
-      home: const Expenses(),
+    ChangeNotifierProvider(
+      create: (context)=> FinanceProvider.instance,
+      child: MaterialApp(
+        themeMode: ThemeMode.system,
+        darkTheme: darkTheme,
+        theme: lightTheme,
+        debugShowCheckedModeBanner: false,
+        home: const Expenses(),
+      ),
     ),
   );
 }
@@ -25,6 +29,9 @@ Future appInIt()async{
 
   // Init & open global DB
   await initDB();
+
+  // Update user data from DB
+  await FinanceProvider.instance.initialize();
   return;
 }
 

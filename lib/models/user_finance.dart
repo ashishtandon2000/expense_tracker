@@ -3,16 +3,16 @@ part of 'models.dart';
 class UserFinance {
   UserFinance(
       {this.salary = const Income(amount: 0, source: ""),
-      this.otherIncomes = const IncomeBucket(incomes: []),
-      this.expenses = const ExpenseBucket(expenses: []),
+      this.otherIncomesBucket = const IncomeBucket(incomes: []),
+      this.expenseBucket = const ExpenseBucket(expenses: []),
       // this.subscriptions = const ExpenseBucket(expenses: [])
-      this.liquidFunds = const LiquidFundsBucket(funds: []),
-      this.investments = const InvestmentBucket(investments: [])});
+      this.liquidFundBucket = const LiquidFundsBucket(funds: []),
+      this.investmentBucket = const InvestmentBucket(investments: [])});
 
   Income salary;
-  IncomeBucket otherIncomes;
-  LiquidFundsBucket liquidFunds;
-  InvestmentBucket investments;
-  ExpenseBucket expenses;
+  IncomeBucket otherIncomesBucket;
+  LiquidFundsBucket liquidFundBucket;
+  InvestmentBucket investmentBucket;
+  ExpenseBucket expenseBucket;
   // final ExpenseBucket subscriptions;
 }

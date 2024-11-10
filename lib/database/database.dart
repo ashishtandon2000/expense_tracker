@@ -1,35 +1,66 @@
 library database;
 
+import 'package:expense_tracker/models/models.dart';
 import 'package:hive_flutter/adapters.dart';
 
-// late final Box<double>
-late final Box userBox;
+import '../util/util.dart';
 
-/// Initial setup required for Hive DB
-Future initDB()async{
-  await Hive.initFlutter();
-  await openGlobalDB();
+part 'private_box.dart';
+
+class BoxNames{
+  static const expense = "expense";
+  static const user = "user";
 }
 
-/// Opens all globalDBs of the app
-Future openGlobalDB()async{
-  userBox = await Hive.openBox<String>('user');
+class  CurrentMonthDBs{
+  const CurrentMonthDBs({required this.expenseBox});
+  // const CurrentMonthDBs({required this.incomeBox, required this.expenseBox, required this.investmentBox, required this.liquidFundBox});
+  final PrivateBox<Expense> expenseBox;
+
+  // final PrivateBox<Income> incomeBox;
+  // final PrivateBox<Investment> investmentBox;
+  // final PrivateBox<LiquidFund> liquidFundBox;
 }
 
-/// Function to open the DB, it will return a box with type specified in <T> while calling the function
-Future<Box<T>>  openDB<T>(String name,{Duration? openFor}) async{
+class DB {
+  DB();
 
-  /// Open the db...
-  final db = await Hive.openBox<T>(name);
+  static late PrivateBox userBox;
+  static late CurrentMonthDBs present;
+  /// Initial setup required for Hive DB...
+  /// 1. Init Flutter
+  /// 2. Open globalDBs
+  /// 3. Register adapters
+  static Future init() async {
+    await Hive.initFlutter();
+    registerAdapters();
 
-  if(openFor!= null){// Close the db if duration is provided (only to be used when we are sure that db is not going to be used after openFor period)
-    Future.delayed(openFor,()=> closeDB(db));
+    // Close if any Box is already open
+    await Hive.close();
+    // Hive.deleteFromDisk(); // delete if required...
+
+    // Open required DBS...
+    await _openGlobalDB();
+    present = await _openPresentDBs();
   }
 
-  return db;
+  /// Opens all globalDBs of the app
+  static Future _openGlobalDB()async{
+    // Open and wait set PrivateBox...
+    await Hive.openBox(BoxNames.user);
+    userBox = PrivateBox(BoxNames.user);
+  }
+
+  static Future<CurrentMonthDBs> _openPresentDBs()async{
+    final monthYearString = getMonthYearString();
+
+    await Hive.openBox<Expense>("${BoxNames.expense}_$monthYearString");
+
+    return CurrentMonthDBs(
+        expenseBox:  PrivateBox<Expense>("${BoxNames.expense}_$monthYearString"),
+    );
+  }
+
 }
 
-/// Closes the Hive box instantly
-void closeDB(Box box)async{
-  await box.close();
-}
+

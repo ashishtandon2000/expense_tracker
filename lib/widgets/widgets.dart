@@ -14,3 +14,4 @@ part 'add_expense/add_expense.dart';
 part 'add_expense/buttons.dart';
 part 'chart/chart.dart';
 part 'chart/chart_bar.dart';
+part 'expense_list/filters.dart';

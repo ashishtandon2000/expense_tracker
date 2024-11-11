@@ -22,5 +22,29 @@ class ExpenseBucket {
     expenses.add(expense);
   }
 
+  List<Expense> get amountLowToHigh {
+    final List<Expense> sorted = List.from(expenses);
+    sorted.sort((a,b)=> b.amount.compareTo(a.amount));
+    return sorted;
+  }
+
+  List<Expense> get amountHighToLow {
+    final List<Expense> sorted = List.from(expenses);
+    sorted.sort((a,b)=> a.amount.compareTo(b.amount));
+    return sorted;
+  }
+
+  List<Expense> get timeLatestFirst {
+    final List<Expense> sorted = List.from(expenses);
+    sorted.sort((a,b)=>b.date.compareTo(a.date));
+    return sorted;
+  }
+
+  List<Expense> get timeOldestFirst {
+    final List<Expense> sorted = List.from(expenses);
+    sorted.sort((a,b)=>a.date.compareTo(b.date));
+    return sorted;
+  }
+
   double get totalExpense => expenses.fold(0, (sum, expense)=>sum+expense.amount);
 }

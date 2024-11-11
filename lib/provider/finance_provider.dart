@@ -15,7 +15,29 @@ class FinanceProvider extends ChangeNotifier{
     await _updateUserFromDB();
   }
 
+  late List<Expense> calculatedExpenses;
+
   final UserFinance user = UserFinance();
+  void sortExpenses(String selection){
+    switch (selection){
+      case FilterValues.amountHighToLow:
+        calculatedExpenses = user.expenseBucket.amountLowToHigh;
+        break;
+      case FilterValues.amountLowToHigh:
+        calculatedExpenses = user.expenseBucket.amountHighToLow;
+        break;
+      case FilterValues.timeLatestFirst:
+        calculatedExpenses = user.expenseBucket.timeLatestFirst;
+        break;
+      case FilterValues.timeOldestFirst:
+        calculatedExpenses = user.expenseBucket.timeOldestFirst;
+
+
+    }
+    notifyListeners();
+  }
+
+
 
   /// Initial data update of user from the DB when the app loads... Should only run after db is opened
   Future _updateUserFromDB()async{
@@ -27,7 +49,7 @@ class FinanceProvider extends ChangeNotifier{
     // user.investmentBucket = InvestmentBucket(investments:  _dbs.investmentBox.values.toList());
     // user.otherIncomesBucket = IncomeBucket(incomes:   _dbs.incomeBox.values.toList());
     // user.liquidFundBucket = LiquidFundsBucket(funds: _dbs.liquidFundBox.values.toList());
-
+    calculatedExpenses = user.expenseBucket.expenses;
     notifyListeners();
     return;
   }
@@ -56,6 +78,8 @@ class FinanceProvider extends ChangeNotifier{
       await DB.present.expenseBox.put(expense.id, expense);
       user.expenseBucket.addExpense(expense);
     }
+
+    calculatedExpenses = user.expenseBucket.expenses;
     notifyListeners();
   }
 }

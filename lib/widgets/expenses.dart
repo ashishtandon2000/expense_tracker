@@ -16,7 +16,12 @@ class Expenses extends StatelessWidget {
     );
 
     if (expenseList.isNotEmpty){
-      widgetContent = const ExpensesList();
+      widgetContent = const Column(
+        children: [
+          Filters(),
+          Expanded(child: ExpensesList()),
+        ],
+      );
     }
     return Scaffold(
       appBar: AppBar(
@@ -35,13 +40,12 @@ class Expenses extends StatelessWidget {
         ],
       ),
       body: SizedBox(
+        height: double.maxFinite,
         width: double.maxFinite,
         child: (width < 600)?Column(
           children: [
             (expenseList.isNotEmpty)?Chart(expenses: expenseList,):const SizedBox(),
-            Expanded(
-              child: widgetContent,
-            ),
+            Expanded(child: widgetContent)
           ],
         ):Row(
           children: [

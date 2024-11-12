@@ -39,13 +39,8 @@ void main() async {
 }
 /*
 * TODO:
-*  1. Add methods for making changes in FinanceProvider
-*  2. Use Finance provider to show data in UI
-*  3. Optimize rebuilding
-*  4. Add remaining features
-*  5. Beautify UI
-*
 * // For the first version add:
-* - Sorting
+* - Search me sort carry hora h but sort me bhi search carry hona chye
+* - add complete data to expense tile.
 * - Switching chart between category and sub category
 * */

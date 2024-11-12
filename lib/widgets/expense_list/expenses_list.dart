@@ -6,7 +6,7 @@ class ExpensesList extends StatelessWidget {
   showUndoDialog(BuildContext context,Expense expense,Future Function() saveAction){
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("Removed expense - ${expense.title}"),
+        content: Text("Removed: ${expense.title}"),
         duration: const Duration(seconds: 3),
         action: SnackBarAction(label: "UNDO", onPressed: saveAction),),
     );

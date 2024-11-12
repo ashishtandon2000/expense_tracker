@@ -20,59 +20,70 @@ class Filters extends StatelessWidget {
     // final myProvider = Provider.of<FinanceProvider>(context, listen: false);
     // But as we have build Provide class as singleton we can just directly call the instance of provider
     final myProvider = FinanceProvider.instance;
-    return Row(
-      children: [
-        // Expanded(
-        //   child: Padding(
-        //     padding: const EdgeInsets.all(0.0),
-        //
-        //     child: TextField(
-        //       decoration: InputDecoration(
-        //         hintText: "Search...",
-        //         prefixIcon: Icon(Icons.search),
-        //         border: OutlineInputBorder(
-        //           borderRadius: BorderRadius.circular(8),
-        //           borderSide: BorderSide.none,
-        //         ),
-        //         filled: true,
-        //         fillColor: Colors.grey[200],
-        //       ),
-        //       onChanged: (value) {
-        //         // Optional: add a callback to handle search query changes
-        //         print("Search query: $value");
-        //       },
-        //     ),
-        //   ),
-        // ),
-        const Text("Sort By: "),
-        DropdownMenu(
-            width: 150,
-            textStyle: const TextStyle(fontSize: 15),
-            initialSelection: FilterValues.timeLatestFirst,
-            onSelected: (selection) {
-              if (selection != null) {
-                myProvider.sortExpenses(selection);
-              }
-            },
-            dropdownMenuEntries: const [
-              DropdownMenuEntry(
-                label: "Latest first",
-                value: FilterValues.timeLatestFirst,
-              ),
-              DropdownMenuEntry(
-                label: "Oldest first",
-                value: FilterValues.timeOldestFirst,
-              ),
-              DropdownMenuEntry(
-                label: "Low to high",
-                value: FilterValues.amountLowToHigh,
-              ),
-              DropdownMenuEntry(
-                label: "High to low",
-                value: FilterValues.amountHighToLow,
-              ),
-            ]),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          const Expanded(child: SearchBox()),
+          const Text("Sort By: "),
+          DropdownMenu(
+              width: 150,
+              textStyle: const TextStyle(fontSize: 15),
+              initialSelection: FilterValues.timeLatestFirst,
+              onSelected: (selection) {
+                if (selection != null) {
+                  myProvider.sortExpenses(selection);
+                }
+              },
+              dropdownMenuEntries: const [
+                DropdownMenuEntry(
+                  label: "Latest first",
+                  value: FilterValues.timeLatestFirst,
+                ),
+                DropdownMenuEntry(
+                  label: "Oldest first",
+                  value: FilterValues.timeOldestFirst,
+                ),
+                DropdownMenuEntry(
+                  label: "Low to high",
+                  value: FilterValues.amountLowToHigh,
+                ),
+                DropdownMenuEntry(
+                  label: "High to low",
+                  value: FilterValues.amountHighToLow,
+                ),
+              ]),
+        ],
+      ),
+    );
+  }
+}
+
+class SearchBox extends StatelessWidget {
+  const SearchBox({super.key});
+
+  @override
+  Widget build(context) {
+    String searchInput = "";
+    final myProvider = FinanceProvider.instance;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: SearchBar(
+        elevation: const WidgetStatePropertyAll(0),
+        leading: IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: () {
+            myProvider.searchExpenses(searchInput);
+          },
+        ),
+        onChanged: (value){
+          searchInput = value;
+          if(searchInput==""){
+            myProvider.searchExpenses(searchInput);
+          }
+        },
+      ),
     );
   }
 }

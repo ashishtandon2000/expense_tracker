@@ -7,7 +7,7 @@ class Expenses extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final financeProvider = Provider.of<FinanceProvider>(context); // Access provider
-    final expenseList = financeProvider.user.expenseBucket.expenses;
+    final expenseList = financeProvider.calculatedExpenses;
 
     print("#DEBUG _ RUNNING - $expenseList");
 

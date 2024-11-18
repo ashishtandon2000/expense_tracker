@@ -17,7 +17,7 @@ class ExpenseBucket {
     expenses.remove(expense);
   }
 
-  /// To remove particular expense from bucket
+  /// To add particular expense to bucket
   void addExpense(Expense expense){
     expenses.add(expense);
   }

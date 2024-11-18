@@ -1,7 +1,9 @@
 part of 'util.dart';
 
 void _appPrint(Object? object){
-  print(object);
+  if(kDebugMode || kProfileMode){
+    print("#DEBUG | - $object");
+  }
 }
 
 String getMonthYearString(){

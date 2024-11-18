@@ -22,17 +22,19 @@ class _AddExpenseState extends State<AddExpense> {
   void _cancelAction() => Navigator.pop(context);
 
   void _saveAction() {
-    print("Saving -> ${titleController.text} ${amountController.text}");
     final isValid = _validateExpense();
     if (!isValid) {
       return;
     }
-    financeProvider.updateExpense(Expense(
+    financeProvider.updateExpense(
+        Expense(
         title: titleController.text,
         amount: int.parse(amountController.text),
         category: categoryInput,
         subCategory: subCategoryInput,
-        dateTime: dateInput,));
+        date: DateTime.now(),
+        id: idGenerator.v4(),
+        isRecurring: false));
 
     Navigator.pop(context);
   }
@@ -95,7 +97,7 @@ class _AddExpenseState extends State<AddExpense> {
   @override
   Widget build(BuildContext context) {
     /// This will provide the height of offset we are getting from bottom if any. For example when keyboard is opened it will provide the height of keyboard.
-    final keyboardHeight =MediaQuery.of(context).viewInsets.bottom; 
+    final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
     return SizedBox(
       height: double.maxFinite,
       child: SingleChildScrollView(

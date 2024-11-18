@@ -8,7 +8,7 @@ part of 'models.dart';
 
 class ExpenseAdapter extends TypeAdapter<Expense> {
   @override
-  final int typeId = 4;
+  final int typeId = 3;
 
   @override
   Expense read(BinaryReader reader) {
@@ -25,8 +25,10 @@ class ExpenseAdapter extends TypeAdapter<Expense> {
       subCategory: fields[5] == null
           ? ExpenseSubCategory.other
           : fields[5] as ExpenseSubCategory,
+      date: fields[1] as DateTime,
+      id: fields[0] as String,
       isRecurring: fields[6] as bool,
-    )..date = fields[1] as DateTime;
+    );
   }
 
   @override

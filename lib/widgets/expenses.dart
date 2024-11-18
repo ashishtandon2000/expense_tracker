@@ -9,8 +9,6 @@ class Expenses extends StatelessWidget {
     final financeProvider = Provider.of<FinanceProvider>(context); // Access provider
     final expenseList = financeProvider.calculatedExpenses;
 
-    print("#DEBUG _ RUNNING - $expenseList");
-
     Widget widgetContent = const Center(
       child: Text("No expenses yet"),
     );

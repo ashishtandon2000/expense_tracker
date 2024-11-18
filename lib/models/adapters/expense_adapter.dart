@@ -32,9 +32,20 @@ class Expense  {
     required this.amount,
     required this.category,
     required this.subCategory,
+    required this.date,
+    required this.id,
+    required this.isRecurring,
+  });
+
+  Expense.create({
+    required this.title,
+    required this.amount,
+    required this.category,
+    required this.subCategory,
     DateTime? dateTime,
+    String? id,
     this.isRecurring = false,
-  })  : id = idGenerator.v4(),
+  })  : id = id?? idGenerator.v4(),
         date = dateTime ?? DateTime.now();
 
   @HiveField(0)

@@ -26,7 +26,7 @@ final darkTheme = ThemeData.dark().copyWith(
     backgroundColor: App.colorSchemeDark.onPrimaryContainer,
     foregroundColor: App.colorSchemeDark.primaryContainer,
   ),
-  cardTheme: const CardTheme().copyWith(
+  cardTheme: const CardThemeData().copyWith(
     color: App.colorSchemeDark.secondaryContainer,
   ),
 
@@ -43,7 +43,7 @@ final lightTheme = ThemeData().copyWith(
     backgroundColor: App.colorScheme.onPrimaryContainer,
     foregroundColor: App.colorScheme.primaryContainer,
   ),
-  cardTheme: const CardTheme().copyWith(
+  cardTheme: const CardThemeData().copyWith(
     color: App.colorScheme.secondaryContainer,
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(

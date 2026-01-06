@@ -23,7 +23,7 @@ class Expenses extends StatelessWidget {
     }
     return Scaffold(
       appBar: AppBar(
-        title:  const Text("Money 360"),
+        title:  const Text("Balancio – Expense Tracker"),
         actions: [
           IconButton(
             onPressed: (){

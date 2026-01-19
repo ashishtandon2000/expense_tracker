@@ -25,6 +25,7 @@ class ExpenseAdapter extends TypeAdapter<Expense> {
       subCategory: fields[5] == null
           ? ExpenseSubCategory.other
           : fields[5] as ExpenseSubCategory,
+      description: fields[7] as String,
       date: fields[1] as DateTime,
       id: fields[0] as String,
       isRecurring: fields[6] as bool,
@@ -34,7 +35,7 @@ class ExpenseAdapter extends TypeAdapter<Expense> {
   @override
   void write(BinaryWriter writer, Expense obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -48,7 +49,9 @@ class ExpenseAdapter extends TypeAdapter<Expense> {
       ..writeByte(5)
       ..write(obj.subCategory)
       ..writeByte(6)
-      ..write(obj.isRecurring);
+      ..write(obj.isRecurring)
+      ..writeByte(7)
+      ..write(obj.description);
   }
 
   @override

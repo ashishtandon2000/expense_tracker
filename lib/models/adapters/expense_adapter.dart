@@ -32,6 +32,7 @@ class Expense  {
     required this.amount,
     required this.category,
     required this.subCategory,
+    this.description = "", // Option field, but did not wanted it to be nullable so kept default value...
     required this.date,
     required this.id,
     required this.isRecurring,
@@ -42,6 +43,7 @@ class Expense  {
     required this.amount,
     required this.category,
     required this.subCategory,
+    this.description = "",
     DateTime? dateTime,
     String? id,
     this.isRecurring = false,
@@ -68,6 +70,9 @@ class Expense  {
 
   @HiveField(6)
   final bool isRecurring;
+
+  @HiveField(7)
+  final String description;
 
   String get formattedAmount {
     return amount.toStringAsFixed(2);

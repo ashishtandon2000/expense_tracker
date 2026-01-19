@@ -11,6 +11,7 @@ class AddExpense extends StatefulWidget {
 
 class _AddExpenseState extends State<AddExpense> {
   final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
   final amountController = TextEditingController();
   late FinanceProvider financeProvider;
 
@@ -32,6 +33,7 @@ class _AddExpenseState extends State<AddExpense> {
         amount: int.parse(amountController.text),
         category: categoryInput,
         subCategory: subCategoryInput,
+        description: descriptionController.text,
         date: DateTime.now(),
         id: idGenerator.v4(),
         isRecurring: false));
@@ -92,6 +94,7 @@ class _AddExpenseState extends State<AddExpense> {
 
     titleController.dispose();
     amountController.dispose();
+    descriptionController.dispose();
   }
 
   @override
@@ -175,6 +178,20 @@ class _AddExpenseState extends State<AddExpense> {
                           }
                         }),
                   ],
+                ),
+              ),
+              SizedBox(
+                width: double.maxFinite,
+                child: TextField(
+                  controller: descriptionController,
+                  minLines: 2,
+                  maxLines: 4,
+                  keyboardType: TextInputType.multiline,
+                  decoration: const InputDecoration(
+                    labelText: 'Description (optional)...',
+                    alignLabelWithHint: true,
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
               FormButtons(

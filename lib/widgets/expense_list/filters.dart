@@ -74,16 +74,28 @@ class SearchBox extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.search),
           onPressed: () {
-            myProvider.searchExpenses(searchInput);
+            final found = myProvider.searchExpenses(searchInput);
+            if(!found)noSearchMatchMsg(context);
           },
         ),
         onChanged: (value){
           searchInput = value;
           if(searchInput==""){
-            myProvider.searchExpenses(searchInput);
+            final found =  myProvider.searchExpenses(searchInput);
+            if(!found)noSearchMatchMsg(context);
           }
         },
       ),
     );
   }
+}
+
+
+void noSearchMatchMsg(BuildContext context){
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text("No matching expenses found"),
+      duration: Duration(seconds: 2),
+    ),
+  );
 }

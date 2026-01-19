@@ -15,7 +15,7 @@ class FinanceProvider extends ChangeNotifier{
     await _updateUserFromDB();
   }
 
-  /// _user will be the inital data that will be used by only the Finance Provider.
+  /// _user will be the initial data that will be used by only the Finance Provider.
   ///
   /// Calculated data from this user will be provided through variables like: calculatedExpenses
   final UserFinance _user = UserFinance();
@@ -63,19 +63,17 @@ class FinanceProvider extends ChangeNotifier{
 
 
     final filtered = expenseBucket.expenses.where((expense){
-      if(expense.title.toLowerCase().contains(input)){
-        return true;
-      }
-      return false;
+      return (expense.title.toLowerCase().contains(input));
     }).toList();
 
+    // TODO: Remove this later, to implement: when nothing matching found search should hide current list, with graph stats
     if(filtered.isEmpty){
       return false;
     }
 
     sortExpenses(_currentSort,filteredList: filtered);
     // notifyListeners(); // we are sorting at the end which calls changeNotifier, that is why we do not seperately need to call it.
-    return true;
+    return filtered.isEmpty;
   }
 
   Future updateExpense(Expense expense,{bool deleteExpense = false})async{

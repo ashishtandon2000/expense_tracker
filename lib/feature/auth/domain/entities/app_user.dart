@@ -26,4 +26,9 @@ class AppUser {
   final String? photoUrl;
 
   const AppUser({required this.id, this.email, this.displayName, this.photoUrl});
+
+  @override
+  String toString() {
+    return 'AppUser(id: $id, email: $email, displayName: $displayName, photoUrl: $photoUrl)';
+  }
 }

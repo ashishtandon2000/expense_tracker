@@ -42,14 +42,12 @@ class FirebaseAuthService{
   }
 
   Future<UserCredential> signInWithGoogle() async {
-    final account = await _googleSignIn.authenticate(
-      scopeHint: ['email', 'https://www.googleapis.com/auth/contacts.readonly'],
-    );
+    final account = await _googleSignIn.authenticate();
 
     final googleAuth = account.authentication;
 
     final clientAuth = await account.authorizationClient.authorizeScopes(
-        ['https://www.googleapis.com/auth/contacts.readonly']
+        ['email','profile']
     );
 
     final credential = GoogleAuthProvider.credential(

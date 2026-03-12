@@ -37,10 +37,18 @@ This is where:
 
    FirebaseAuthRepository(this._authService);
 
+   AppUser? _currentUser;
+
    @override
    Stream<AppUser?> authStateChanges() {
-     return _authService.authStateChanges().map(_mapUser);
+     return _authService.authStateChanges().map((user){
+       _currentUser = _mapUser(user);
+       return _currentUser;
+     });
    }
+
+   @override
+  AppUser? get currentUser => _currentUser;
 
    @override
    Future<void> signInWithGoogle() async {

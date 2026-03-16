@@ -7,6 +7,10 @@ class FirestoreExpenseService {
   FirestoreExpenseService({FirebaseFirestore? firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
+   String newExpenseId(String uid) {
+      return _firestore.collection("users").doc(uid).collection("expenses").doc().id;
+    }
+
   Stream<QuerySnapshot<Map<String, dynamic>>> watchExpenses(String uid) {
     return _firestore
         .collection("users")

@@ -1,8 +1,4 @@
-enum ExpenseCategory {
-  essential,
-  nonEssential,
-  miscellaneous,
-}
+import '../../../../core/constants/expense_category.dart';
 
 class Expense {
   final String id;

@@ -4,12 +4,22 @@ import 'package:expense_tracker/feature/expenses/data/services/firestore_expense
 import 'package:expense_tracker/feature/expenses/domain/entities/expense.dart';
 import 'package:expense_tracker/feature/expenses/domain/repositories/expense_repository.dart';
 
+import '../../../../core/constants/expense_category.dart';
+
 class FirestoreExpenseRepository implements ExpenseRepository{
 
   FirestoreExpenseRepository(this._authRepository,this._expenseService);
 
   final FirestoreExpenseService _expenseService;
   final AuthRepository _authRepository;
+
+  @override
+  String get nextExpenseId{
+    final user = _authRepository.currentUser;
+    if(user==null)throw "User Not found";  //TODO: #ERRO Implement
+
+    return _expenseService.newExpenseId(user.id);
+  }
 
   @override
   Future<void> addExpense(Expense expense) async {

@@ -1,6 +1,6 @@
 import 'package:expense_tracker/feature/auth/presentation/viewmodels/auth_viewmodel.dart';
 import 'package:expense_tracker/feature/auth/presentation/views/auth_screen.dart';
-import 'package:expense_tracker/widgets/widgets.dart';
+import 'package:expense_tracker/feature/expenses/presentation/views/expense_dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,8 +12,14 @@ class AuthGate extends StatelessWidget {
 
     final isAuthenticated = context.select<AuthViewModel, bool>((vm)=>vm.isAuthenticated);
 
-    if(isAuthenticated)return const Expenses();
+    if(isAuthenticated){
+      final auth =context.read<AuthViewModel>();
+      print("USer auth is : ${auth.user}");
+    }
 
-    return const AuthScreen();
+
+    if(isAuthenticated)return const ExpenseDashboardScreen();
+
+    return const SignupScreen();
   }
 }

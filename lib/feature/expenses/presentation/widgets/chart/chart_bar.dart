@@ -1,4 +1,4 @@
-part of '../widgets.dart';
+import 'package:flutter/material.dart';
 
 class ChartBar extends StatelessWidget{
   const ChartBar({required this.fill, super.key});

@@ -1,4 +1,9 @@
-part of '../widgets.dart';
+import 'package:expense_tracker/core/constants/expense_category.dart';
+import 'package:expense_tracker/core/constants/icons.dart';
+import 'package:expense_tracker/feature/expenses/domain/entities/expense.dart';
+import 'package:flutter/material.dart';
+
+import 'chart_bar.dart';
 
 class Chart extends StatelessWidget{
   const Chart({required this.expenses, super.key});
@@ -8,12 +13,11 @@ class Chart extends StatelessWidget{
 
   List<ExpenseBucket> get buckets {
     return [
-      ExpenseBucket.forCategory(expenses: expenses, category: ExpenseCategory.essential),
-      ExpenseBucket.forCategory(expenses: expenses, category: ExpenseCategory.nonEssential),
-      ExpenseBucket.forCategory(expenses: expenses, category: ExpenseCategory.miscellaneous)
+      ExpenseBucket.forCategory( expenses,  ExpenseCategory.essential),
+      ExpenseBucket.forCategory( expenses,  ExpenseCategory.nonEssential),
+      ExpenseBucket.forCategory( expenses,  ExpenseCategory.miscellaneous)
     ];
   }
-
   double get maxTotalExpense {
     double maxTotalExpense = 0;
       for(final bucket in buckets){
@@ -80,6 +84,36 @@ class Chart extends StatelessWidget{
           )
         ],
       ),
+    );
+  }
+}
+
+
+
+class ExpenseBucket {
+  const ExpenseBucket({
+    required this.category,
+    required this.expenses,
+  });
+
+  final ExpenseCategory category;
+  final List<Expense> expenses;
+
+  double get totalExpense {
+    return expenses.fold(0, (sum, e) => sum + e.amount);
+  }
+
+  static ExpenseBucket forCategory(
+      List<Expense> allExpenses,
+      ExpenseCategory category,
+      ) {
+    final filtered = allExpenses
+        .where((e) => e.category == category)
+        .toList();
+
+    return ExpenseBucket(
+      category: category,
+      expenses: filtered,
     );
   }
 }

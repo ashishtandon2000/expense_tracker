@@ -19,9 +19,12 @@ class ExpenseDashboardViewModel extends ChangeNotifier {
   StreamSubscription<List<Expense>>? _subscription;
 
   final List<Expense> _allExpenses = [];
+  int get totalExpensesCount => _allExpenses.length;
   List<Expense> visibleExpenses = [];
 
   String _searchQuery = '';
+
+  ExpenseSort get currentSort => _currentSort;
   ExpenseSort _currentSort = ExpenseSort.latestFirst;
 
 //  ======================================================
@@ -29,13 +32,14 @@ class ExpenseDashboardViewModel extends ChangeNotifier {
 //  ======================================================
 
   Future<void> addExpense({
+    String? id,
     required String title,
     required double amount,
     required ExpenseCategory category,
     required DateTime date,
     String description = '',
   })async{
-    final newExpenseId =  _expenseRepository.nextExpenseId;
+    final newExpenseId =  id?? _expenseRepository.nextExpenseId;
     
     final expense = Expense(id: newExpenseId, title: title, amount: amount, category: category, date: date,description: description);
     await _expenseRepository.addExpense(expense);

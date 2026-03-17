@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "522674889152",
+    "project_id": "balancio-expense-tracker",
+    "storage_bucket": "balancio-expense-tracker.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522674889152:android:03ab6851254c203d626825",
+        "android_client_info": {
+          "package_name": "com.ashishapps.money360"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522674889152-1336reqv6sc1sicv0c5i22t8eeptrmfp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ashishapps.money360",
+            "certificate_hash": "d324c3973b0d7baa1cedc4310dde0ccffa47a7b5"
+          }
+        },
+        {
+          "client_id": "522674889152-5i8icc1gckkggnsopofh1j02jfkpa1dq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ashishapps.money360",
+            "certificate_hash": "fb1f0b029e4373e3222bcdaacb5f3e5ead2df18e"
+          }
+        },
+        {
+          "client_id": "522674889152-3g4qrla22882qrsocbma73prqgneusjs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZS86P-S6eVJkFZM2NurS0mi8vcJ6PjnI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522674889152-3g4qrla22882qrsocbma73prqgneusjs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

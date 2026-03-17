@@ -1,13 +1,12 @@
-
-import 'package:expense_tracker/backup/models/models.dart';
+import 'package:intl/intl.dart';
 
 final formatter = DateFormat.yMd();
 
 
-String get formattedAmount {
+String formatAmount(double amount) {
   return amount.toStringAsFixed(2);
 }
 
-String get formattedDate {
+String formatDate(DateTime date) {
   return formatter.format(date);
 }
